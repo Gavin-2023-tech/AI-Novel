@@ -41,6 +41,7 @@ docker run -d \
 
 ```bash
 mkdir AI-Novel && cd AI-Novel
+mkdir ./data && chmod -Rf 777 ./data
 wget https://github.com/shuaihaoV/AI-Novel/raw/main/docker-compose.yml
 
 # 修改环境变量
