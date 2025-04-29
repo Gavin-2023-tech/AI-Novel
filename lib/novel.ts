@@ -1,6 +1,6 @@
 import { callAI, callAISSE } from "./ai";
 import { Novel, insertNovelHistory, NovelHistory, getNovelById, listNovelHistory, updateNovelHistorySelect, getNovelHistoryById, updateNovelHistoryChoices } from "./db";
-import { CHOICE_USER_PROMPT, START_USER_PROMPT, STOR_ING_USER_PROMPT, SYSTEM_PROMPT } from "./prompt";
+import { CHOICE_SYSTEM_PROMPT, CHOICE_USER_PROMPT, START_USER_PROMPT, STOR_ING_USER_PROMPT, SYSTEM_PROMPT } from "./prompt";
 
 export async function generateChoices(novelId: number, userId: number, novelHistoryId: number): Promise<string[] | null> {
   // 获取数据库novel
@@ -16,7 +16,7 @@ export async function generateChoices(novelId: number, userId: number, novelHist
 
   // 构建消息数组
   const messages = [
-    { role: "system", content: SYSTEM_PROMPT }
+    { role: "system", content: CHOICE_SYSTEM_PROMPT }
   ];
   
   // 添加历史消息
