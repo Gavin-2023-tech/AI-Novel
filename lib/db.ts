@@ -2,7 +2,7 @@ import sqlite3 from 'better-sqlite3';
 import fs from 'fs';
 import path from 'path';
 
-let dbPath = path.join(process.cwd(), 'data/data.db');
+let dbPath = 'data/data.db';
 
 // 确保目录存在
 const dbDir = path.dirname(dbPath);
