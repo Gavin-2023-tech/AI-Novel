@@ -2,7 +2,7 @@ name: Docker Build and Publish
 
 on:
   push:
-    branches: [ main ]
+    # branches: [ main ]
     # 如果只想在发布tag时构建,可以取消下面的注释
     tags: [ 'v*.*.*' ]
   
