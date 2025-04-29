@@ -69,7 +69,7 @@ export interface NovelHistory {
   id: number;
   novel_id: number;
   story_content: string;
-  choices: string;
+  choices: string[];
   selected_choice: string | null;
   created_at: string;
 }
@@ -231,6 +231,46 @@ export function insertNovelHistory(
 }
 
 /**
+ * 更新小说历史记录中的选项列表
+ * @param historyId - 历史记录ID
+ * @param userId - 用户ID，用于验证权限
+ * @param choices - 选项列表
+ * @returns 更新是否成功
+ */
+export function updateNovelHistoryChoices(
+  historyId: number,
+  userId: number,
+  choices: string[]
+): boolean {
+  try {
+    // 首先验证该历史记录是否属于该用户的小说
+    const checkStmt = db.prepare(`
+      SELECT nh.id 
+      FROM novel_history nh
+      JOIN novels n ON nh.novel_id = n.id
+      WHERE nh.id = ? AND n.user_id = ?
+    `);
+
+    const history = checkStmt.get(historyId, userId);
+
+    // 如果历史记录不存在或不属于该用户的小说，返回false
+    if (!history) {
+      console.warn(`用户 ${userId} 尝试更新不属于他的历史记录 ${historyId}`);
+      return false;
+    }
+
+    // 通过验证后，更新选择项
+    const updateStmt = db.prepare(`UPDATE novel_history SET choices = ? WHERE id = ?`);
+
+    const result = updateStmt.run(JSON.stringify(choices), historyId);
+    return result.changes > 0;
+  } catch (error) {
+    console.error('更新历史记录Choices失败:', error);
+    throw error;
+  }
+}
+
+/**
  * 更新小说历史记录中的选择项
  * @param historyId - 历史记录ID
  * @param userId - 用户ID，用于验证权限
@@ -286,8 +326,15 @@ export function getNovelHistoryById(historyId: number, userId: number): NovelHis
       WHERE nh.id = ? AND n.user_id = ?
     `);
 
-    const result = stmt.get(historyId, userId) as NovelHistory | undefined;
-    return result || null;
+    let result = stmt.get(historyId, userId) as any | undefined;
+    // 将choices字段从JSON字符串转换为数组
+    if (result) {
+      if (result.choices){
+        result.choices = JSON.parse(result.choices);
+      }
+      return result;
+    }
+    return null;
   } catch (error) {
     console.error('获取历史记录详情失败:', error);
     throw error;
@@ -323,7 +370,14 @@ export function listNovelHistory(novelId: number, userId: number): NovelHistory[
       ORDER BY created_at ASC
     `);
 
-    return historyStmt.all(novelId) as NovelHistory[];
+    let result =  historyStmt.all(novelId) as any[];
+    // 将choices字段从JSON字符串转换为数组
+    result.forEach(history => {
+      if (history.choices){
+        history.choices = JSON.parse(history.choices);
+      }
+    });
+    return result;
   } catch (error) {
     console.error('获取小说历史记录失败:', error);
     throw error;
