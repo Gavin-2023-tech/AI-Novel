@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   ai-novel:
-    image: shuaihaov/ai-novel:latest
+    image: ghcr.io/shuaihaov/ai-novel:main
     container_name: ai-novel
     restart: unless-stopped
     ports:

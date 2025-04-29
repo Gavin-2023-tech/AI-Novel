@@ -34,7 +34,7 @@ docker run -d \
   -e API_KEY=sk-xxxxxx \
   -e BASE_URL=https://aiproxy.gzg.sealos.run/v1/ \
   -e NEXTAUTH_URL=https://your-domain.com/ \
-  shuaihaov/AI-Novel:latest
+  ghcr.io/shuaihaov/ai-novel:main
 ```
 
 ### 2. Docker Compose部署
