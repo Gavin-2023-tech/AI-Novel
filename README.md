@@ -13,6 +13,9 @@ AI-Novel 是基于Next.js实现的大模型小说创作工具。通过该工具,
 
 ![novel-page](./images/novel-page.png)
 
+## 演示站点
+- [AI-Novel 演示站点](https://ai-novel.shuaihao.vip)
+- 演示站点使用glm-4-long模型,请不要滥用。
 
 ## 环境变量
 >  AI-Novel项目需要一些环境变量才能正常运行。
