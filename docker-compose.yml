@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  ai-novel:
+    image: shuaihaov/ai-novel:latest
+    container_name: ai-novel
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - BASE_URL=https://aiproxy.gzg.sealos.run/v1/
+      - API_KEY=sk-xxxxxxxxxxxx
+      - MODEL=glm-4-long
+      - NEXTAUTH_URL=https://your-domain.com/  # 访问链接
+    volumes:
+      - ./data:/app/data  # 数据持久化
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

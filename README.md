@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+<h1 align="center">AI-Novel</h1>
 
-## Getting Started
+AI-Novel 是基于Next.js实现的大模型小说创作工具。通过该工具,你可以使用自定义大模型进行小说创作,并通过推理生成不同的剧情选项,以进行小说故事线的推进。
 
-First, run the development server:
+![logo](./public/favicon.webp)
 
+</div>
+
+## 特性
+- 使用自定义大模型进行小说创作
+- 推理生成不同的剧情选项,以进行小说故事线推进
+
+![novel-page](./images/novel-page.png)
+
+
+## 环境变量
+>  AI-Novel项目需要一些环境变量才能正常运行。
+>
+> 请确保在部署或本地开发之前设置这些环境变量。
+- NEXTAUTH_URL 搭建后的访问链接
+- BASE_URL 模型Endpoint链接
+- MODEL 模型名
+- API_KEY 模型Key
+
+## 部署指南
+
+### 1. Docker部署方式
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker run -d \
+  --name AI-Novel \
+  -p 80:3000 \
+  -e MODEL=glm-4-long \
+  -e API_KEY=sk-xxxxxx \
+  -e BASE_URL=https://aiproxy.gzg.sealos.run/v1/ \
+  -e NEXTAUTH_URL=https://your-domain.com/ \
+  shuaihaov/AI-Novel:latest
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Docker Compose部署
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+mkdir AI-Novel && cd AI-Novel
+wget https://github.com/shuaihaoV/AI-Novel/raw/main/docker-compose.yml
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 修改环境变量
+vim docker-compose.yml
 
-## Learn More
+# docker compose 启动
+docker compose up -d
+# 部分版本使用 docker-compose up -d 
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 贡献
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+如果您想为AI-Novel贡献代码或提供反馈，请遵循以下步骤：
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Fork 项目仓库。
+2. 创建您的特性分支 (`git checkout -b feature/AmazingFeature`)。
+3. 提交您的更改 (`git commit -m 'Add some AmazingFeature'`)。
+4. 将您的更改推送到分支 (`git push origin feature/AmazingFeature`)。
+5. 打开一个Pull Request。
 
-## Deploy on Vercel
+## 支持
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+如果您在使用AI-Novel时遇到问题或需要帮助，请通过以下方式联系我们：
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 在本项目的 [Issues](https://github.com/shuaihaoV/AI-Novel/issues) 页面提交问题
+
+## 项目依赖
+
+- [Next.js](https://nextjs.org/) - 用于构建应用程序的React框架。
+- [radix-ui](https://radix-ui.com/) - 用于构建UI的React组件库。
+
+## 致谢
+
+- 参考了[Linux.do/TQmyLady](https://linux.do/t/topic/601900/40)项目的实现
