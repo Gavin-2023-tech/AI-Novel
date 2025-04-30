@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
         JSON.stringify({ error: '创建小说失败' }),
         { 
           status: 500,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json'}
         }
       );
     }
@@ -135,6 +135,7 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
+        'X-Accel-Buffering':'no'
       },
     });
   } catch (error) {
